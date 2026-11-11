@@ -24,6 +24,13 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(InvalidLoginException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidLogin(InvalidLoginException ex) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", ex.getMessage()));
+    }
+
+
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Map<String, String>> handleDatabaseError(SQLException ex) {
 

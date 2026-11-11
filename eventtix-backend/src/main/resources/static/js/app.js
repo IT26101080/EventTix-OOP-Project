@@ -309,20 +309,15 @@
         event.preventDefault();
         const ok = await confirmDialog({
           title: "Log out?",
-          message: "You will be signed out of EventTix. (Login is handled by the backend and is not connected yet.)",
+          message: "You will be signed out of EventTix.",
           confirmText: "Log Out",
           tone: "primary",
         });
-        if (ok) showToast("Log out will work once Spring Boot authentication is connected.", "info");
+        if (ok) logoutUser();   // logoutUser() is in auth.js
       });
     });
 
-    document.querySelectorAll('[data-action="settings"]').forEach((link) => {
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        showToast("Settings are not part of this frontend demo.", "info");
-      });
-    });
+    // (The Settings link now goes to settings.html, so it needs no code here.)
   }
 
   function initSummaryCards() {
@@ -866,6 +861,9 @@
 
     form.elements.email.addEventListener("input", () => form.elements.email.setCustomValidity(""));
   }
+
+  // Share these helpers so users.js and settings.js can use them too
+  window.EventTixUI = { showToast, confirmDialog, escapeHtml };
 
   /* ------------------------------------------------------------------
      Boot
